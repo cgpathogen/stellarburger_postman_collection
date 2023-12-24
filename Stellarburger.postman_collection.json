@@ -1,0 +1,231 @@
+{
+	"info": {
+		"_postman_id": "8a999b11-2cea-4b1d-8c4c-976faff72dbd",
+		"name": "Stellarburger",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "23052310",
+		"_collection_link": "https://blue-sunset-367300.postman.co/workspace/Team-Workspace~e44fd503-e093-4bf0-8591-1276b15200dc/collection/23052310-8a999b11-2cea-4b1d-8c4c-976faff72dbd?action=share&source=collection_link&creator=23052310"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Reset password",
+					"item": [
+						{
+							"name": "New Request",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\"email\": \"anatoly-tester@test.ru\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://stellarburgers.nomoreparties.site/api/password-reset"
+							},
+							"response": []
+						},
+						{
+							"name": "Reset pass 2",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\"password\": \"qa_bobrov\",\r\n\"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODg4YzZjOWVkMjgwMDAxYjM5YjY1NCIsImlhdCI6MTcwMzQ0NzY2MCwiZXhwIjoxNzAzNDQ4ODYwfQ.GmcVYcnR9ABmod7740PMYn4_bPXo1BiBedfHb8IGcBM\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://stellarburgers.nomoreparties.site/api/password-reset/reset-password"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Update token",
+					"item": [
+						{
+							"name": "Refresh token",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\"token\": \"00cdf4facc66ef957480ad9a957bfac3e35049d5712ca5600cbd02d44128dc7799634e3309b0e5a3\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://stellarburgers.nomoreparties.site/api/auth/logout"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Actions with user",
+					"item": [
+						{
+							"name": "Create a User",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\"email\": \"anatoly-tester@test.ru\",\r\n\"password\": \"qa_bobrov\",\r\n\"name\": \"Anatoly\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://stellarburgers.nomoreparties.site/api/auth/register"
+							},
+							"response": []
+						},
+						{
+							"name": "Authorization / Registration",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\"email\": \"anatoly-tester@test.ru\",\r\n\"password\": \"qa_bobrov\",\r\n\"name\": \"Anatoly\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://stellarburgers.nomoreparties.site/api/auth/login"
+							},
+							"response": []
+						},
+						{
+							"name": "Get info 'bout User",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODg4YzZjOWVkMjgwMDAxYjM5YjY1NCIsImlhdCI6MTcwMzQ0OTIyMywiZXhwIjoxNzAzNDUwNDIzfQ.fE5SyHardySoxnA07elJpWlJ3o6a3SY2rkIEVnsVbUg"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": "https://stellarburgers.nomoreparties.site/api/auth/user"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete User",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": "https://stellarburgers.nomoreparties.site/api/auth/user"
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "Get info of ingredients",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODg4YzZjOWVkMjgwMDAxYjM5YjY1NCIsImlhdCI6MTcwMzQ0NzY2MCwiZXhwIjoxNzAzNDQ4ODYwfQ.GmcVYcnR9ABmod7740PMYn4_bPXo1BiBedfHb8IGcBM"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "https://stellarburgers.nomoreparties.site/api/ingredients"
+					},
+					"response": []
+				},
+				{
+					"name": "Make an order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"ingredients\": [\"61c0c5a71d1f82001bdaaa72\",\"61c0c5a71d1f82001bdaaa70\",\"61c0c5a71d1f82001bdaaa6c\"]\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://stellarburgers.nomoreparties.site/api/orders"
+					},
+					"response": []
+				},
+				{
+					"name": "Make another order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"ingredients\": [\"61c0c5a71d1f82001bdaaa6c\",\"61c0c5a71d1f82001bdaaa75\",\"61c0c5a71d1f82001bdaaa71\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://stellarburgers.nomoreparties.site/api/orders"
+					},
+					"response": []
+				},
+				{
+					"name": "Gett all User's order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODg4YzZjOWVkMjgwMDAxYjM5YjY1NCIsImlhdCI6MTcwMzQ0NzY2MCwiZXhwIjoxNzAzNDQ4ODYwfQ.GmcVYcnR9ABmod7740PMYn4_bPXo1BiBedfHb8IGcBM"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "https://stellarburgers.nomoreparties.site/api/orders/all"
+					},
+					"response": []
+				},
+				{
+					"name": "Get distinct User's orders",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODg4YzZjOWVkMjgwMDAxYjM5YjY1NCIsImlhdCI6MTcwMzQ0NzY2MCwiZXhwIjoxNzAzNDQ4ODYwfQ.GmcVYcnR9ABmod7740PMYn4_bPXo1BiBedfHb8IGcBM"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "https://stellarburgers.nomoreparties.site/api/orders"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
