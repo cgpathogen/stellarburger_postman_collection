@@ -1,0 +1,680 @@
+{
+	"info": {
+		"_postman_id": "8a999b11-2cea-4b1d-8c4c-976faff72dbd",
+		"name": "Stellarburger",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23052310",
+		"_collection_link": "https://blue-sunset-367300.postman.co/workspace/Team-Workspace~e44fd503-e093-4bf0-8591-1276b15200dc/collection/23052310-8a999b11-2cea-4b1d-8c4c-976faff72dbd?action=share&source=collection_link&creator=23052310"
+	},
+	"item": [
+		{
+			"name": "Create a User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var JsonData = pm.response.json();\r",
+							"pm.environment.set(\"UserEmail\", pm.request.body.urlencoded.get(\"email\"));\r",
+							"pm.environment.set(\"UserName\", pm.request.body.urlencoded.get(\"name\"));\r",
+							"pm.environment.set(\"UserPsswrd\",  pm.request.body.urlencoded.get(\"password\"))\r",
+							"pm.environment.set(\"b_token\", JsonData.accessToken);\r",
+							"pm.environment.set(\"r_token\", JsonData.refreshToken);\r",
+							"\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "{{$randomEmail}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{$randomPassword}}",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "{{$randomFirstName}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://stellarburgers.nomoreparties.site/api/auth/register",
+					"protocol": "https",
+					"host": [
+						"stellarburgers",
+						"nomoreparties",
+						"site"
+					],
+					"path": [
+						"api",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Exisintg user(negative_test)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 403\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "{{UserEmail}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{UserPsswrd}}",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "{{UserName}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://stellarburgers.nomoreparties.site/api/auth/register",
+					"protocol": "https",
+					"host": [
+						"stellarburgers",
+						"nomoreparties",
+						"site"
+					],
+					"path": [
+						"api",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "No one field (negative_test)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 403\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "{{UserEmail}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{UserPsswrd}}",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "name",
+							"value": "{{UserName}}",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "https://stellarburgers.nomoreparties.site/api/auth/register",
+					"protocol": "https",
+					"host": [
+						"stellarburgers",
+						"nomoreparties",
+						"site"
+					],
+					"path": [
+						"api",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Authorization / Registration",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var JsonData = pm.response.json();\r",
+							"var b2_token = JsonData.accessToken;\r",
+							"var b2_clean = b2_token.replace(\"Bearer \", \"\");\r",
+							"pm.environment.set(\"b2_clean\", b2_clean);\r",
+							"\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"email\": \"{{UserEmail}}\",\r\n\"password\": \"{{UserPsswrd}}\",\r\n\"name\": \"{{UserName}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://stellarburgers.nomoreparties.site/api/auth/login",
+					"protocol": "https",
+					"host": [
+						"stellarburgers",
+						"nomoreparties",
+						"site"
+					],
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Log out / drop token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"token\": \"{{r_token}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://stellarburgers.nomoreparties.site/api/auth/logout",
+					"protocol": "https",
+					"host": [
+						"stellarburgers",
+						"nomoreparties",
+						"site"
+					],
+					"path": [
+						"api",
+						"auth",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Authorization / Registration Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var JsonData = pm.response.json();\r",
+							"var b2_token = JsonData.accessToken;\r",
+							"var b2_clean = b2_token.replace(\"Bearer \", \"\");\r",
+							"pm.environment.set(\"b2_clean\", b2_clean);\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"email\": \"{{UserEmail}}\",\r\n\"password\": \"{{UserPsswrd}}\",\r\n\"name\": \"{{UserName}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://stellarburgers.nomoreparties.site/api/auth/login",
+					"protocol": "https",
+					"host": [
+						"stellarburgers",
+						"nomoreparties",
+						"site"
+					],
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get info 'bout User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{b2_clean}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://stellarburgers.nomoreparties.site/api/auth/user",
+					"protocol": "https",
+					"host": [
+						"stellarburgers",
+						"nomoreparties",
+						"site"
+					],
+					"path": [
+						"api",
+						"auth",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Make an order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"ingredients\": [\"61c0c5a71d1f82001bdaaa72\",\"61c0c5a71d1f82001bdaaa70\",\"61c0c5a71d1f82001bdaaa6c\"]\r\n}\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://stellarburgers.nomoreparties.site/api/orders",
+					"protocol": "https",
+					"host": [
+						"stellarburgers",
+						"nomoreparties",
+						"site"
+					],
+					"path": [
+						"api",
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Make another order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"ingredients\": [\"61c0c5a71d1f82001bdaaa6c\",\"61c0c5a71d1f82001bdaaa75\",\"61c0c5a71d1f82001bdaaa71\"]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://stellarburgers.nomoreparties.site/api/orders",
+					"protocol": "https",
+					"host": [
+						"stellarburgers",
+						"nomoreparties",
+						"site"
+					],
+					"path": [
+						"api",
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Gett all User's order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{b_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://stellarburgers.nomoreparties.site/api/orders/all",
+					"protocol": "https",
+					"host": [
+						"stellarburgers",
+						"nomoreparties",
+						"site"
+					],
+					"path": [
+						"api",
+						"orders",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get info of ingredients",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODg4YzZjOWVkMjgwMDAxYjM5YjY1NCIsImlhdCI6MTcwMzQ0NzY2MCwiZXhwIjoxNzAzNDQ4ODYwfQ.GmcVYcnR9ABmod7740PMYn4_bPXo1BiBedfHb8IGcBM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://stellarburgers.nomoreparties.site/api/ingredients",
+					"protocol": "https",
+					"host": [
+						"stellarburgers",
+						"nomoreparties",
+						"site"
+					],
+					"path": [
+						"api",
+						"ingredients"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get distinct User's orders",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{b_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://stellarburgers.nomoreparties.site/api/orders",
+					"protocol": "https",
+					"host": [
+						"stellarburgers",
+						"nomoreparties",
+						"site"
+					],
+					"path": [
+						"api",
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://stellarburgers.nomoreparties.site/api/auth/user",
+					"protocol": "https",
+					"host": [
+						"stellarburgers",
+						"nomoreparties",
+						"site"
+					],
+					"path": [
+						"api",
+						"auth",
+						"user"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
